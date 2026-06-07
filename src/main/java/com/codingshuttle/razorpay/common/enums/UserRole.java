@@ -1,0 +1,7 @@
+package com.codingshuttle.razorpay.common.enums;
+
+public enum UserRole {
+    ADMIN,
+    TEAM,
+    OWNER
+}
