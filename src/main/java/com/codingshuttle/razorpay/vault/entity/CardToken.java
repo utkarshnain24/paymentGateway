@@ -2,6 +2,7 @@ package com.codingshuttle.razorpay.vault.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +13,7 @@ public class CardToken {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 50)
     private String token;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -24,5 +25,7 @@ public class CardToken {
 
     @Column(nullable = false)
     private UUID merchantId;
+
+    private LocalDateTime revokedAt;
 
 }

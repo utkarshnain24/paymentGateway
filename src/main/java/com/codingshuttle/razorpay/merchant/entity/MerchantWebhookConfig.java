@@ -13,20 +13,20 @@ public class MerchantWebhookConfig {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "merchant_id", nullable = false)
     private Merchant merchant;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String targetUrl;
 
-    @Column(name = "event_type_filter")
-    private String eventTypeFilter;
+    @Column(length = 255)
+    private String eventTypes;
 
     @Column(nullable = false)
-    private boolean enabled;
+    private boolean enabled = true;
 
-    @Column(name = "webhook_secret")
-    private String webhookSecret;
+    @Column(length = 255)
+    private String webhookSecretHash;
 
 }

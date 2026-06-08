@@ -3,8 +3,11 @@ package com.codingshuttle.razorpay.payment.entity;
 import com.codingshuttle.razorpay.common.entity.Money;
 import com.codingshuttle.razorpay.common.enums.RefundStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -27,7 +30,7 @@ public class Refund {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private RefundStatus status;
+    private RefundStatus status = RefundStatus.PENDING;
 
     @Column(length = 100)
     private String bankReference;
@@ -37,6 +40,10 @@ public class Refund {
 
     @Column(length = 255)
     private String errorDescription;
+
+    @JdbcTypeCode((SqlTypes.JSON))
+    @Column(columnDefinition = "jsonb")
+    private Map<String, Object> notes;
 
     private LocalDateTime processedAt;
 }
