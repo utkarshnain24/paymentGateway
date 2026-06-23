@@ -14,7 +14,7 @@ import java.util.Map;
 public class PaymentAdapterConfig {
 
     @Bean
-    public Map<PaymentMethod, PaymentAdapter> paymentAdapterConfig() {
+    public Map<PaymentMethod, PaymentAdapter> paymentAdapterMap() {
         return Map.of(
                 PaymentMethod.NET_BANKING, new NetBankingPaymentAdapter(),
                 PaymentMethod.CARD, new CardPaymentAdapter(),

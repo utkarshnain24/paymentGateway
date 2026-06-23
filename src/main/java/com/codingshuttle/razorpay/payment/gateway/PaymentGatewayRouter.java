@@ -12,10 +12,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PaymentGatewayRouter {
 
-    private final Map<PaymentMethod, PaymentAdapter> paymentAdapter;
+    private final Map<PaymentMethod, PaymentAdapter> paymentAdapters;
 
     public PaymentResult initiate(PaymentRequest request) {
-        PaymentAdapter adapter = paymentAdapter.get(request.method());
+        PaymentAdapter adapter = paymentAdapters.get(request.method());
         if (adapter == null) {
             throw new IllegalArgumentException("No payment adapter registered for method: " + request.method());
         }
