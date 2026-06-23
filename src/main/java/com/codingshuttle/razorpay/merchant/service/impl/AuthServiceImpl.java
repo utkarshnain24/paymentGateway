@@ -1,5 +1,6 @@
 package com.codingshuttle.razorpay.merchant.service.impl;
 
+import com.codingshuttle.razorpay.common.enums.ErrorCodes;
 import com.codingshuttle.razorpay.common.enums.MerchantStatus;
 import com.codingshuttle.razorpay.common.enums.UserRole;
 import com.codingshuttle.razorpay.common.exceptions.DuplicateResourceException;
@@ -30,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     public MerchantResponse signup(MerchantSignupRequest request) {
         if (merchantRepository.existsByEmail(request.email())) {
             throw new DuplicateResourceException(
-                    "DUPLICATE_MERCHANT_EMAIL",
+                    ErrorCodes.DUPLICATE_MERCHANT_EMAIL.name(),
                     "Merchant with email " + request.email() + " already exists"
             );
         }

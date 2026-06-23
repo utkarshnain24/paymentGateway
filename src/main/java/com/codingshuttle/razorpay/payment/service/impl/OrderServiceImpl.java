@@ -1,5 +1,6 @@
 package com.codingshuttle.razorpay.payment.service.impl;
 
+import com.codingshuttle.razorpay.common.enums.ErrorCodes;
 import com.codingshuttle.razorpay.common.enums.OrderStatus;
 import com.codingshuttle.razorpay.common.exceptions.BusinessRuleViolationException;
 import com.codingshuttle.razorpay.common.exceptions.DuplicateResourceException;
@@ -41,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponse create(UUID merchantId, CreateOrderRequest request) {
         if (request.receipt() != null && orderRepository.existsByMerchantIdAndReceipt(merchantId, request.receipt())) {
-            throw new DuplicateResourceException("ORDER_RECEIPT_DUPLICATE", "Order with receipt " + request.receipt() + " already exists");
+            throw new DuplicateResourceException(ErrorCodes.ORDER_RECEIPT_DUPLICATE.name(), "Order with receipt " + request.receipt() + " already exists");
         }
 
         OrderRecord order = OrderRecord.builder()
@@ -75,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
 
         if (order.getOrderStatus() == OrderStatus.CANCELLED || order.getOrderStatus() == OrderStatus.PAID) {
-            throw new BusinessRuleViolationException("ORDER_CANNOT_CANCEL", "Cannot cancel order with status: " + order.getOrderStatus().name());
+            throw new BusinessRuleViolationException(ErrorCodes.ORDER_CANNOT_CANCEL.name(), "Cannot cancel order with status: " + order.getOrderStatus().name());
         }
 
         order.setOrderStatus(OrderStatus.CANCELLED);
